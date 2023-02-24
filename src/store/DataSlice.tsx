@@ -17,9 +17,13 @@ const dataSlice = createSlice({
       const { title, Desc, tags } = action.payload;
       state.push({ title, Desc, tags });
     },
+    DeleteData: (state, action) => {
+      const filter = state.filter((item) => item.title !== action.payload.title);
+      return filter
+    }
     // other reducer functions
   },
 });
 
-export const { addData } = dataSlice.actions;
+export const { addData, DeleteData } = dataSlice.actions;
 export default dataSlice.reducer;
