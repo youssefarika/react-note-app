@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import { addData } from "../store/DataSlice";
 import Nav from "./Nav";
@@ -42,7 +42,7 @@ function Create() {
   // ...
   
   const handleTagsChange = (newValue: MultiValue<string>) => {
-    const tags = newValue.map((value) => ({ label: value }));
+    const tags = newValue.map((value) => value);
     setSelectedTags(tags);
   };
   
