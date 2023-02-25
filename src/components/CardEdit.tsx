@@ -1,22 +1,25 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
-import { addData } from "../store/DataSlice";
+import { addData, modifyData } from "../store/DataSlice";
 import Nav from "./Nav";
 import { MultiValue } from 'react-select';
+import { store } from "../store/store";
 
-function Create() {
+function CardEdit() {
   const DescText = useRef<HTMLTextAreaElement>(null);
   const TitleText = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { title } = useParams<{ title: string }>();
+  const item = store.getState().data.find((item) => item.title === title);
   const [error, setError] = useState(false);
   const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: string
+    tags?: { label: string }[]
   }
   const handleData = () => {
     if (TitleText.current) {
@@ -26,37 +29,35 @@ function Create() {
           setError(false);
         }, 2500);
       } else {
-        const data: CreatedaData = {
-          title: TitleText.current.value,
+        dispatch(modifyData({
+          title: title,
           Desc: DescText.current?.value,
-          tags: selectedTags ,
-        }
-        dispatch(addData(data));
+          tags: selectedTags.length > 0 ? selectedTags : item?.tags || [],
+        }));
         setError(false);
         navigate("/");
-        console.log(selectedTags)
       }
     }
   };
   
-  // ...
+  const options = item?.tags?.map((tag) => ({ value: tag, label: tag })) || [];
   
   const handleTagsChange = (newValue: MultiValue<string>) => {
-    const tags = newValue.map(value => value.label)
+    const tags = newValue.map(value => value.label).flat()
     setSelectedTags(tags);
+    console.log(selectedTags)
   };
-  
-  
 
   return (
     <div className="container">
-      <Nav title="New Notes" />
+      <Nav title="Edit Note" />
       <div className="grid grid-cols-2 pt-6 gap-4">
         <form>
           <label className="block pb-2">Title</label>
           <input
             ref={TitleText}
             type="text"
+            defaultValue={item ? item.title : ""}
             placeholder=""
             className="input input-bordered h-9 input-sm lg:w-[40rem] sm: w-full max-w-2xl"
             required
@@ -69,6 +70,7 @@ function Create() {
           <label className="block pb-2">Tags</label>
           <CreatableSelect
             isMulti
+            defaultValue={options}
             onChange={handleTagsChange}
           />
         </form>
@@ -77,10 +79,10 @@ function Create() {
         <label className="relative bottom-2">Body</label>
         <textarea
           ref={DescText}
+          defaultValue={item && item.Desc}
           className="textarea textarea-bordered textarea-lg w-full"
         ></textarea>
       </form>
-
       <div className="buttons float-right pt-4">
         <button
           className="btn btn-sm btn-primary h-10 mr-2"
@@ -90,12 +92,13 @@ function Create() {
         >
           Save
         </button>
-        <button className="btn btn-sm btn-outline h-10" onClick={() => navigate("/")}>
+        <button className="btn btn-sm btn-outline h-10" onClick={() => console.log(item.tags)}>
           Cancel
         </button>
       </div>
     </div>
   );
+  
 }
 
-export default Create;
+export default CardEdit;
