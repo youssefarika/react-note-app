@@ -1,10 +1,13 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import { addData } from "../store/DataSlice";
 import Nav from "./Nav";
 import { MultiValue } from 'react-select';
+import uuid from 'react-native-uuid';
+import { store } from "../store/store";
+
 
 function Create() {
   const DescText = useRef<HTMLTextAreaElement>(null);
@@ -12,11 +15,14 @@ function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
+  const { title } = useParams<{ title: string }>();
+  const item = store.getState().data.find((item) => item.title === title);
   const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: string
+    tags?: {label: string} [] | undefined,
+    id: string | number[],
   }
   const handleData = () => {
     if (TitleText.current) {
@@ -30,11 +36,13 @@ function Create() {
           title: TitleText.current.value,
           Desc: DescText.current?.value,
           tags: selectedTags ,
+          id: item && item.id || uuid.v4()
+          // id: uuid()
         }
         dispatch(addData(data));
         setError(false);
         navigate("/");
-        console.log(selectedTags)
+        console.log(data.id, "add")
       }
     }
   };
