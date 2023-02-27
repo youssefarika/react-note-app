@@ -2,10 +2,11 @@ import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
-import { addData, modifyData } from "../store/DataSlice";
+import { modifyData } from "../store/DataSlice";
 import Nav from "./Nav";
 import { MultiValue } from 'react-select';
 import { store } from "../store/store";
+
 
 function CardEdit() {
   const DescText = useRef<HTMLTextAreaElement>(null);
@@ -16,30 +17,32 @@ function CardEdit() {
   const item = store.getState().data.find((item) => item.title === title);
   const [error, setError] = useState(false);
   const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
-  type CreatedaData = {
+  type ModifiedaData = {
     title: string,
     Desc: string | undefined,
     tags?: { label: string }[]
   }
-  const handleData = () => {
-    if (TitleText.current) {
-      if (TitleText.current.value.trim() === "") {
-        setError(true);
-        setTimeout(() => {
-          setError(false);
-        }, 2500);
-      } else {
-        dispatch(modifyData({
-          title: title,
-          Desc: DescText.current?.value,
-          tags: selectedTags.length > 0 ? selectedTags : item?.tags || [],
-        }));
+const handleData = () => {
+  if (TitleText.current) {
+    if (TitleText.current.value.trim() === "") {
+      setError(true);
+      setTimeout(() => {
         setError(false);
-        navigate("/");
+      }, 2500);
+    } else {
+      const data: ModifiedaData = {
+        title: TitleText.current.value,
+        Desc: DescText.current?.value,
+        tags: selectedTags.length > 0 ? selectedTags : item?.tags || [],
+        id:  item.id
       }
+      dispatch(modifyData(data));
+      setError(false);
+      navigate("/");
+      console.log(data.id, "modified")
     }
-  };
-  
+  }
+};
   const options = item?.tags?.map((tag) => ({ value: tag, label: tag })) || [];
   
   const handleTagsChange = (newValue: MultiValue<string>) => {
