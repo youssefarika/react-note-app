@@ -25,8 +25,6 @@ function Create() {
   const { title } = useParams<{ title: string }>();
   const item = store.getState().data.find((item) => item.title === title);
   const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
-  // const used = data.find(item => item.tags.join(" ") === selectedTags.join(" "))
-  // const usedTags = used?.tags
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
@@ -34,7 +32,7 @@ function Create() {
     id: string | number[],
   }
   const handleData = () => {
-    const used = data.find(item => item.tags.join(" ") === selectedTags.join(" "))
+    // Tell the user they have to write a title
     if (TitleText.current) {
       if (TitleText.current.value.trim() === "") {
         setError(true);
@@ -47,20 +45,8 @@ function Create() {
           Desc: DescText.current?.value,
           tags: selectedTags,
           id: item && item.id || uuid.v4()
-          // id: uuid()
         }
-        const exceptdata: CreatedaData = {
-          title: TitleText.current.value,
-          Desc: DescText.current?.value,
-          tags: selectedTags,
-          id: item && item.id || uuid.v4()
-          // id: uuid()
-        }
-        if(used) {
-          dispatch(addData(exceptdata));
-        } else {
           dispatch(addData(data));
-        }
         setError(false);
         navigate("/");
       }

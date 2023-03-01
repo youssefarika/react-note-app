@@ -17,22 +17,22 @@ function Selecting() {
   const options = unused?.map((items) => ({ value: items, label: items })) || [];
   const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
   const dispatch = useDispatch()
-  const handleChange = (newValue: MultiValue<string>) => {
-    const tags = newValue.label.join(" ")
+  const handleChange = (newValue: { label: string }[]) => {
+    const tags = newValue.label
     setSelectedTags(tags);
     dispatch(addTarget(tags));
-    console.log(data)
   };
   return (
     <>
         <form>
           <label className="block pb-2">Tags</label>
           <Select
-            className="basic-single lg:w-[40.5rem]"
+            className="basic-multi-select"
             classNamePrefix="select"
             name="color"
+            isMulti
             options={options}
-            value={selectedTags}
+            defaultValue={selectedTags}
             onChange={handleChange}
           />
         </form>

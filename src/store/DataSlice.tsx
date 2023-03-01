@@ -21,6 +21,7 @@ const dataSlice = createSlice({
     modifyData: (state, action) => {
       const { title, Desc, tags, id } = action.payload;
       const existingItem = state.find((item) => item.id === id);
+      // do not create a new card jsu modify the current
       if (existingItem) {
         Object.assign(existingItem, { Desc, title, tags, id });
       }
@@ -35,8 +36,4 @@ const dataSlice = createSlice({
 export const { addData, modifyData, DeleteData } = dataSlice.actions;
 export default dataSlice.reducer;
 
-// const alltags = data?.map((items) => items.tags);
-// const unused = alltags?.map((items) => items);
-// const notused = unused.filter((tag) => tag !== tag)
-// const options = notused.map((items) => ({ value: items, label: items }));
 

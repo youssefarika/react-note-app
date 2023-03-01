@@ -9,7 +9,8 @@ function Card() {
   const targets = useSelector((state: RootState) => state.target);
   const item = store.getState().data.find((item) => item.tags)
   useEffect(() => {
-  }, [item]);
+    console.log(targets)
+  }, [targets]);
   return (
     <div className="grid lg:grid-cols-4 cursor-pointer gap-3 pt-5 md:grid-cols-2">
       {Datainfo ? (
