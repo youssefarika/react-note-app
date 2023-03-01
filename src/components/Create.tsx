@@ -15,6 +15,12 @@ function Create() {
   const data = useSelector((state: RootState) => state.data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const alltags = data?.map((items) => items.tags);
+  // Remove all nested array
+  const flattenedTags = alltags?.flat(alltags.length);
+  // Remove All duplicated values from the array
+  const unused = Array.from(new Set(flattenedTags)).map((item) => item);
+  const options = unused?.map((items) => ({ value: items, label: items })) || [];
   const [error, setError] = useState(false);
   const { title } = useParams<{ title: string }>();
   const item = store.getState().data.find((item) => item.title === title);
@@ -27,7 +33,6 @@ function Create() {
     tags?: {label: string} [],
     id: string | number[],
   }
-  const options = data?.map((items) => ({ value: items.tags, label: items.tags })) || [];
   const handleData = () => {
     const used = data.find(item => item.tags.join(" ") === selectedTags.join(" "))
     if (TitleText.current) {
