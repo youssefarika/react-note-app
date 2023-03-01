@@ -39,7 +39,6 @@ const handleData = () => {
       dispatch(modifyData(data));
       setError(false);
       navigate("/");
-      console.log(data.id, "modified")
     }
   }
 };
@@ -48,7 +47,6 @@ const handleData = () => {
   const handleTagsChange = (newValue: MultiValue<string>) => {
     const tags = newValue.map(value => value.label).flat()
     setSelectedTags(tags);
-    console.log(selectedTags)
   };
 
   return (

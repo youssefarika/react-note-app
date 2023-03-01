@@ -1,15 +1,20 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import type { RootState } from '../store/store'
+import { RootState, store } from '../store/store'
 
 function Card() {
   const Datainfo = useSelector((state: RootState) => state.data);
   const navigate = useNavigate()
+  const targets = useSelector((state: RootState) => state.target);
+  const item = store.getState().data.find((item) => item.tags)
+  useEffect(() => {
+  }, [item]);
   return (
     <div className="grid lg:grid-cols-4 cursor-pointer gap-3 pt-5 md:grid-cols-2">
       {Datainfo ? (
         Datainfo.map((item) => (
-            <div key={item.id} className="rounded-lg w-80 bg-base-100 shadow-xl border-2" onClick={() => navigate(`${item.title}`)}>
+            <div key={item.id} className="rounded-lg min-h-[10rem] bg-base-100 shadow-xl border-2" onClick={() => navigate(`${item.title}`)}>
               <div className="card-body text-xl pl-4 pb-4 relative bottom-3">
                 <p>{item.title}</p>
               </div>

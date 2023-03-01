@@ -1,30 +1,35 @@
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import { addData } from "../store/DataSlice";
 import Nav from "./Nav";
 import { MultiValue } from 'react-select';
 import uuid from 'react-native-uuid';
-import { store } from "../store/store";
+import { RootState, store } from "../store/store";
 
 
 function Create() {
   const DescText = useRef<HTMLTextAreaElement>(null);
   const TitleText = useRef<HTMLInputElement>(null);
+  const data = useSelector((state: RootState) => state.data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
   const { title } = useParams<{ title: string }>();
   const item = store.getState().data.find((item) => item.title === title);
   const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
+  // const used = data.find(item => item.tags.join(" ") === selectedTags.join(" "))
+  // const usedTags = used?.tags
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: {label: string} [] | undefined,
+    tags?: {label: string} [],
     id: string | number[],
   }
+  const options = data?.map((items) => ({ value: items.tags, label: items.tags })) || [];
   const handleData = () => {
+    const used = data.find(item => item.tags.join(" ") === selectedTags.join(" "))
     if (TitleText.current) {
       if (TitleText.current.value.trim() === "") {
         setError(true);
@@ -35,20 +40,29 @@ function Create() {
         const data: CreatedaData = {
           title: TitleText.current.value,
           Desc: DescText.current?.value,
-          tags: selectedTags ,
+          tags: selectedTags,
           id: item && item.id || uuid.v4()
           // id: uuid()
         }
-        dispatch(addData(data));
+        const exceptdata: CreatedaData = {
+          title: TitleText.current.value,
+          Desc: DescText.current?.value,
+          tags: selectedTags,
+          id: item && item.id || uuid.v4()
+          // id: uuid()
+        }
+        if(used) {
+          dispatch(addData(exceptdata));
+        } else {
+          dispatch(addData(data));
+        }
         setError(false);
         navigate("/");
-        console.log(data.id, "add")
       }
     }
   };
   
   // ...
-  
   const handleTagsChange = (newValue: MultiValue<string>) => {
     const tags = newValue.map(value => value.label)
     setSelectedTags(tags);
@@ -78,6 +92,7 @@ function Create() {
           <CreatableSelect
             isMulti
             onChange={handleTagsChange}
+            options = {options}
           />
         </form>
       </div>

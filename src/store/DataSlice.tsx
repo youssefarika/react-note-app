@@ -35,23 +35,8 @@ const dataSlice = createSlice({
 export const { addData, modifyData, DeleteData } = dataSlice.actions;
 export default dataSlice.reducer;
 
-// const handleData = () => {
-//   if (TitleText.current) {
-//     if (TitleText.current.value.trim() === "") {
-//       setError(true);
-//       setTimeout(() => {
-//         setError(false);
-//       }, 2500);
-//     } else {
-//       const data: CreatedaData = {
-//         title: TitleText.current.value,
-//         Desc: DescText.current?.value,
-//         tags: selectedTags.length > 0 ? selectedTags : item?.tags || [],
-//       }
-//       dispatch(modifyData(data));
-//       setError(false);
-//       navigate("/");
-//       console.log(data)
-//     }
-//   }
-// };
+// const alltags = data?.map((items) => items.tags);
+// const unused = alltags?.map((items) => items);
+// const notused = unused.filter((tag) => tag !== tag)
+// const options = notused.map((items) => ({ value: items, label: items }));
+
