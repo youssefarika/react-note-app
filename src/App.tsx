@@ -1,6 +1,9 @@
 import Header from "./components/Header"
 import Card from "./components/Card"
 import Nav from "./components/Nav"
+import { useSelector } from "react-redux"
+import { RootState } from "./store/store";
+import { useEffect } from "react";
 
 
 function App() {

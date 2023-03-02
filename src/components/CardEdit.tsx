@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import { modifyData } from "../store/DataSlice";
 import Nav from "./Nav";
@@ -39,7 +39,6 @@ const handleData = () => {
       dispatch(modifyData(data));
       setError(false);
       navigate("/");
-      console.log(data.id, "modified")
     }
   }
 };
@@ -48,7 +47,6 @@ const handleData = () => {
   const handleTagsChange = (newValue: MultiValue<string>) => {
     const tags = newValue.map(value => value.label).flat()
     setSelectedTags(tags);
-    console.log(selectedTags)
   };
 
   return (
@@ -95,7 +93,7 @@ const handleData = () => {
         >
           Save
         </button>
-        <button className="btn btn-sm btn-outline h-10" onClick={() => console.log(item.tags)}>
+        <button className="btn btn-sm btn-outline h-10" onClick={() => navigate("/")}>
           Cancel
         </button>
       </div>

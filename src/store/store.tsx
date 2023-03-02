@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import data from "./DataSlice"
+import target from "./FilterSlice"
 
 export const store = configureStore({
   reducer: {
     data,
+    target,
   },
 })
 

@@ -1,19 +1,41 @@
 import Select from 'react-select';
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { RootState } from "../store/store";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../store/store';
+import Card from './Card';
+import { addTarget } from '../store/FilterSlice';
+import { MultiValue } from 'react-select';
 
 
 function Selecting() {
-    return (
-      <form>
-        <label className="block pb-2">Tags</label>
-        <Select
-        className="basic-single lg:w-[40.5rem]"
-        classNamePrefix="select"
-        name="color"
-       />      
-      </form>
-    );
-  }
-  
-  export default Selecting;
+  const data = useSelector((state: RootState) => state.data);
+  const alltags = data?.map((items) => items.tags);
+  // Remove all nested array
+  const flattenedTags = alltags?.flat(alltags.length);
+  // Remove All duplicated values from the array
+  const unused = Array.from(new Set(flattenedTags)).map((item) => item);
+  const options = unused?.map((items) => ({ value: items, label: items })) || [];
+  const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
+  const dispatch = useDispatch()
+  const handleChange = (newValue: { label: string }[]) => {
+    const tags = newValue.label
+    setSelectedTags(tags);
+    dispatch(addTarget(newValue));
+  };
+  return (
+        <form>
+          <label className="block pb-2">Tags</label>
+            <Select
+            className="basic-single lg:w-[40rem]"
+            classNamePrefix="select"
+            name="color"
+            options={options}
+            defaultValue={selectedTags}
+            isMulti
+            onChange={handleChange}
+          />
+        </form>
+  );
+}
+
+export default Selecting;

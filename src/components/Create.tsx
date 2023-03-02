@@ -1,19 +1,26 @@
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import { addData } from "../store/DataSlice";
 import Nav from "./Nav";
 import { MultiValue } from 'react-select';
 import uuid from 'react-native-uuid';
-import { store } from "../store/store";
+import { RootState, store } from "../store/store";
 
 
 function Create() {
   const DescText = useRef<HTMLTextAreaElement>(null);
   const TitleText = useRef<HTMLInputElement>(null);
+  const data = useSelector((state: RootState) => state.data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const alltags = data?.map((items) => items.tags);
+  // Remove all nested array
+  const flattenedTags = alltags?.flat(alltags.length);
+  // Remove All duplicated values from the array
+  const unused = Array.from(new Set(flattenedTags)).map((item) => item);
+  const options = unused?.map((items) => ({ value: items, label: items })) || [];
   const [error, setError] = useState(false);
   const { title } = useParams<{ title: string }>();
   const item = store.getState().data.find((item) => item.title === title);
@@ -21,10 +28,11 @@ function Create() {
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: {label: string} [] | undefined,
-    id: string | number[],
+    tags?: {label: string} [],
+    id: React.Key | undefined,
   }
   const handleData = () => {
+    // Tell the user they have to write a title
     if (TitleText.current) {
       if (TitleText.current.value.trim() === "") {
         setError(true);
@@ -35,20 +43,17 @@ function Create() {
         const data: CreatedaData = {
           title: TitleText.current.value,
           Desc: DescText.current?.value,
-          tags: selectedTags ,
+          tags: selectedTags,
           id: item && item.id || uuid.v4()
-          // id: uuid()
         }
-        dispatch(addData(data));
+          dispatch(addData(data));
         setError(false);
         navigate("/");
-        console.log(data.id, "add")
       }
     }
   };
   
   // ...
-  
   const handleTagsChange = (newValue: MultiValue<string>) => {
     const tags = newValue.map(value => value.label)
     setSelectedTags(tags);
@@ -78,6 +83,7 @@ function Create() {
           <CreatableSelect
             isMulti
             onChange={handleTagsChange}
+            options = {options}
           />
         </form>
       </div>
