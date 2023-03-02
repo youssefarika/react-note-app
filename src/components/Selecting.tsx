@@ -20,23 +20,21 @@ function Selecting() {
   const handleChange = (newValue: { label: string }[]) => {
     const tags = newValue.label
     setSelectedTags(tags);
-    dispatch(addTarget(tags));
+    dispatch(addTarget(newValue));
   };
   return (
-    <>
         <form>
           <label className="block pb-2">Tags</label>
-          <Select
-            className="basic-multi-select"
+            <Select
+            className="basic-single lg:w-[40rem]"
             classNamePrefix="select"
             name="color"
-            isMulti
             options={options}
             defaultValue={selectedTags}
+            isMulti
             onChange={handleChange}
           />
         </form>
-    </>
   );
 }
 

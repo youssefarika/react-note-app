@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import CreatableSelect from "react-select/creatable";
 import { modifyData } from "../store/DataSlice";
 import Nav from "./Nav";
@@ -93,7 +93,7 @@ const handleData = () => {
         >
           Save
         </button>
-        <button className="btn btn-sm btn-outline h-10" onClick={() => console.log(item.tags)}>
+        <button className="btn btn-sm btn-outline h-10" onClick={() => navigate("/")}>
           Cancel
         </button>
       </div>

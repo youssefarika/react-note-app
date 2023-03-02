@@ -29,7 +29,7 @@ function Create() {
     title: string,
     Desc: string | undefined,
     tags?: {label: string} [],
-    id: string | number[],
+    id: React.Key | undefined,
   }
   const handleData = () => {
     // Tell the user they have to write a title
