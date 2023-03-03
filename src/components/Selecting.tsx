@@ -1,10 +1,8 @@
 import Select from 'react-select';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
-import Card from './Card';
-import { addTarget } from '../store/FilterSlice';
-import { MultiValue } from 'react-select';
+import { addTarget } from '../store/FilterTargetSlice';
 
 
 function Selecting() {
@@ -26,7 +24,7 @@ function Selecting() {
         <form>
           <label className="block pb-2">Tags</label>
             <Select
-            className="basic-single lg:w-[40rem]"
+            className="basic-single"
             classNamePrefix="select"
             name="color"
             options={options}
