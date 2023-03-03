@@ -10,7 +10,7 @@ function Nav({ title, variant }: Titling) {
         <>
             <div className="flex pt-4 items-center justify-between">
                 <Link to= "/" className='text-[2.5rem] font-semibold text-gray-800'>{title}</Link>
-                <div className="buttons mx-2">
+                <div className="buttons">
                     {variant ? (
                             <>
                                 <Link to="New" className={variant}>
