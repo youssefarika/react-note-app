@@ -1,16 +1,15 @@
-import { ReactNode, useEffect } from "react";
+import { Key, ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from '../store/store'
-import {DataState} from "../store/DataSlice"
-import { Key } from "reselect/es/types";
+
 
 function Card() {
   const Datainfo = useSelector((state: RootState) => state.data);
   const targets = useSelector((state: RootState) => state.target);
   const title = useSelector((state: RootState) => state.title);
   const navigate = useNavigate()
-  const targeting: {label: string} = targets && targets.map(target => target).flat()[0]
+  const targeting: {label: string}  = targets && targets.map(target => target).flat()[0]
   const currentTarget = targeting && targeting.label
   const filtredtags = Datainfo.filter(data => data.tags?.join(" ") === currentTarget)
   // filter titles with no filter show all the cards
@@ -26,8 +25,8 @@ function Card() {
                 <p>{item.title}</p>
               </div>
               <div className="flex justify-center">
-                  {item.tags?.map(data => (
-                    <span  key={item.id} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
+                  {item.tags?.map((data, index) => (
+                    <span  key={index} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
                   ))}
               </div>
             </div>
@@ -39,8 +38,8 @@ function Card() {
             <p>{item.title}</p>
           </div>
           <div className="flex justify-center">
-              {item.tags?.map((data) => (
-                <span  key={item.id} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{(data)}</span> 
+              {item.tags?.map((data, index) => (
+                <span key={index} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{(data)}</span> 
               ))}
           </div>
         </div>

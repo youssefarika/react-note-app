@@ -6,6 +6,7 @@ import { modifyData } from "../store/DataSlice";
 import Nav from "./Nav";
 import { MultiValue } from 'react-select';
 import { store } from "../store/store";
+import uuid from 'react-native-uuid';
 
 
 function CardEdit() {
@@ -21,6 +22,7 @@ function CardEdit() {
     title: string,
     Desc: string | undefined,
     tags?: { label: string }[]
+    id: React.Key | number[],
   }
 const handleData = () => {
   if (TitleText.current) {
@@ -34,7 +36,7 @@ const handleData = () => {
         title: TitleText.current.value,
         Desc: DescText.current?.value,
         tags: selectedTags.length > 0 ? selectedTags : item?.tags || [],
-        id:  item.id
+        id: item && item.id || uuid.v4()
       }
       dispatch(modifyData(data));
       setError(false);
@@ -44,8 +46,8 @@ const handleData = () => {
 };
   const options = item?.tags?.map((tag) => ({ value: tag, label: tag })) || [];
   
-  const handleTagsChange = (newValue: MultiValue<string>) => {
-    const tags = newValue.map(value => value.label).flat()
+  const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
+    const tags = newValue.map(value => ({ value: value.label, label: value.label }));
     setSelectedTags(tags);
   };
 

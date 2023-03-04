@@ -29,7 +29,7 @@ function Create() {
     title: string,
     Desc: string | undefined,
     tags?: {label: string} [],
-    id: React.Key | undefined,
+    id: React.Key | number[],
   }
   const handleData = () => {
     // Tell the user they have to write a title
@@ -54,10 +54,11 @@ function Create() {
   };
   
   // ...
-  const handleTagsChange = (newValue: MultiValue<string>) => {
-    const tags = newValue.map(value => value.label)
+  const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
+    const tags = newValue.map(value => ({ value: value.label, label: value.label }));
     setSelectedTags(tags);
   };
+  
   
   
 
