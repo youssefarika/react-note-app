@@ -5,10 +5,10 @@ import { addTitle } from "../store/FilterTitleSlice";
 function Input() {
   const TitleSearch = useRef<HTMLInputElement>(null)
   const dispatch = useDispatch()
-  const [Title, setTitle] = useState([])
-  const handleChange = (title: string | null) => {
-    title = TitleSearch.current && TitleSearch.current.value
-    setTitle(title);
+  const [Title, setTitle] = useState<string[] | null>(null)
+  const handleChange = () => {
+    const title = TitleSearch.current && TitleSearch.current.value
+    setTitle(title ? [title] : null); // always set the state to an array with one element or null
     dispatch(addTitle(title));
   };
   return (

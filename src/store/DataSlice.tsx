@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-type DataState = {
+export type DataState = {
   title: string,
   Desc?: string,
   tags?: { label: string }[],
@@ -9,7 +9,7 @@ type DataState = {
 }[];
 
 
-const initialState: DataState = localStorage.getItem("note") ? JSON.parse(localStorage.getItem("note")) : [];
+const initialState: DataState = localStorage.getItem("note") ? JSON.parse(localStorage.getItem("note")!) : [];
 
 const dataSlice = createSlice({
   name: "data",
