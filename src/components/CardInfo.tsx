@@ -32,8 +32,8 @@ type CardInfoProps = {
                   </div>
               </div>
               <div className="flex">
-                {item.tags?.map(data => 
-                      <span  key={data} className="btn-xsm mx-1 relative bottom-6 px-2 font-semibold rounded btn-primary">{data}</span> 
+                {item.tags?.map((data, index) => 
+                      <span  key={index} className="btn-xsm mx-1 relative bottom-6 px-2 font-semibold rounded btn-primary">{data}</span> 
                     )}
               </div>
                 <div> 
