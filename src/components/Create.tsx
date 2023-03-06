@@ -24,12 +24,13 @@ function Create() {
   const [error, setError] = useState(false);
   const { title } = useParams<{ title: string }>();
   const item = store.getState().data.find((item) => item.title === title);
-  const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: {label: string} [],
-    id: React.Key | undefined,
+    tags?: string[],
+    id: React.Key | number[],
   }
   const handleData = () => {
     // Tell the user they have to write a title
@@ -54,13 +55,11 @@ function Create() {
   };
   
   // ...
-  const handleTagsChange = (newValue: MultiValue<string>) => {
-    const tags = newValue.map(value => value.label)
+  const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
+    const tags: string[] = newValue.map(value => value.label);
     setSelectedTags(tags);
   };
   
-  
-
   return (
     <div className="container">
       <Nav title="New Notes" />

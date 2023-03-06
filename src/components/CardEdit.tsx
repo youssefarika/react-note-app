@@ -17,10 +17,13 @@ function CardEdit() {
   const item = store.getState().data.find((item) => item.title === title);
   const [error, setError] = useState(false);
   const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
+  type MyOption = {label: string, value: string}
   type ModifiedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: { label: string }[]
+    tags?: { label: string }[],
+    id: React.Key | undefined,
+
   }
 const handleData = () => {
   if (TitleText.current) {
@@ -34,7 +37,7 @@ const handleData = () => {
         title: TitleText.current.value,
         Desc: DescText.current?.value,
         tags: selectedTags.length > 0 ? selectedTags : item?.tags || [],
-        id:  item.id
+        id: item && item.id
       }
       dispatch(modifyData(data));
       setError(false);
@@ -44,7 +47,7 @@ const handleData = () => {
 };
   const options = item?.tags?.map((tag) => ({ value: tag, label: tag })) || [];
   
-  const handleTagsChange = (newValue: MultiValue<string>) => {
+  const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
     const tags = newValue.map(value => value.label).flat()
     setSelectedTags(tags);
   };

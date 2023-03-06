@@ -1,4 +1,4 @@
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 import {  useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store/store';
@@ -13,10 +13,10 @@ function Selecting() {
   // Remove All duplicated values from the array
   const unused = Array.from(new Set(flattenedTags)).map((item) => item);
   const options = unused?.map((items) => ({ value: items, label: items })) || [];
-  const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const dispatch = useDispatch()
-  const handleChange = (newValue: { label: string }[]) => {
-    const tags = newValue.label
+  const handleChange = (newValue:  MultiValue<{ value: string, label: string }>) => {
+    const tags = newValue.map(value => value.label).flat()
     setSelectedTags(tags);
     dispatch(addTarget(newValue));
   };
@@ -28,7 +28,7 @@ function Selecting() {
             classNamePrefix="select"
             name="color"
             options={options}
-            defaultValue={selectedTags}
+            defaultValue={selectedTags.map(tag => ({ value: tag, label: tag }))}
             isMulti
             onChange={handleChange}
           />
