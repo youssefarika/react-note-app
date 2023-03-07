@@ -25,8 +25,8 @@ function Card() {
                 <p>{item.title}</p>
               </div>
               <div className="flex justify-center">
-                  {item.tags?.map(data => (
-                    <span  key={item.id} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
+                  {item.tags?.map((data, index) => (
+                    <span  key={index} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
                   ))}
               </div>
             </div>
@@ -38,8 +38,11 @@ function Card() {
             <p>{item.title}</p>
           </div>
           <div className="flex justify-center">
+              edittags
               {item.tags?.map(data => (
                 <span  key={data} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
+              {item.tags?.map((data, index) => (
+                <span  key={index} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{(data)}</span> 
               ))}
           </div>
         </div>
