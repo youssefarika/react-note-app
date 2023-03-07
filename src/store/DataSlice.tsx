@@ -33,11 +33,21 @@ const dataSlice = createSlice({
       state = state.filter((item) => item.id !== action.payload.id);
       localStorage.setItem("note", JSON.stringify(state)) 
       return state;
+    },
+    DeleteTags: (state, action) => {
+      const tagToDelete = action.payload;
+      const updatedState = state.map((item) => {
+        const tags = item.tags?.filter((tag) => tag !== tagToDelete.join(" "));
+        return { ...item, tags };
+      });
+      localStorage.setItem("note", JSON.stringify(updatedState));
+      return updatedState;
     }
+    
   }
 });
 
-export const { addData, modifyData, DeleteData } = dataSlice.actions;
+export const { addData, modifyData, DeleteData, DeleteTags } = dataSlice.actions;
 export default dataSlice.reducer;
 
 

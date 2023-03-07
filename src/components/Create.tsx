@@ -57,7 +57,7 @@ function Create() {
   // ...
   const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
   
-    const tags: string[] = newValue.map(value => value.label);
+    const tags = newValue.map(value => value.label);
     setSelectedTags(tags);
   };
   
