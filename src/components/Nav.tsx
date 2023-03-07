@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import EditTags from "./EditTags"
 
 type Titling = {
     title: string,
@@ -16,9 +17,7 @@ function Nav({ title, variant }: Titling) {
                                 <Link to="New" className={variant}>
                                     Create
                                 </Link>
-                                <button className="btn btn-sm btn-outline h-10">
-                                    Edit Tags
-                                </button>
+                                <EditTags />
                             </>
                         ) : null}
                 </div>

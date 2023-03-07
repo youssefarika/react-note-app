@@ -47,7 +47,7 @@ const handleData = () => {
   const options = item?.tags?.map((tag) => ({ value: tag, label: tag })) || [];
   
   const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
-    const tags = newValue.map(value => ({ value: value.label, label: value.label }));
+    const tags = newValue.map(value => value.label);
     setSelectedTags(tags);
   };
 
