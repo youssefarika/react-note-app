@@ -6,6 +6,7 @@ import { modifyData } from "../store/DataSlice";
 import Nav from "./Nav";
 import { MultiValue } from 'react-select';
 import { store } from "../store/store";
+import uuid from 'react-native-uuid';
 
 
 function CardEdit() {
@@ -21,8 +22,8 @@ function CardEdit() {
   type ModifiedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: { label: string }[],
-    id: React.Key | undefined,
+    tags?: { label: string }[]
+    id: React.Key | number[],
 
   }
 const handleData = () => {

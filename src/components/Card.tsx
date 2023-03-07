@@ -1,21 +1,20 @@
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from '../store/store'
-import {DataState} from "../store/DataSlice"
-import { Key } from "reselect/es/types";
+
 
 function Card() {
   const Datainfo = useSelector((state: RootState) => state.data);
   const targets = useSelector((state: RootState) => state.target);
   const title = useSelector((state: RootState) => state.title);
   const navigate = useNavigate()
-  const targeting = targets?.map(target => target).flat()[0]
+  const targeting = targets && targets.map(target => target).flat()[0]
   const currentTarget = targeting && targeting.label
   const filtredtags = Datainfo.filter(data => data.tags?.join(" ") === currentTarget)
-  // filter titles with no filter show all the cards
   const filtredtitle = Datainfo.filter(data => data?.title.slice(0, title.join(" ").length) === title.join(" "))
   useEffect(() => {
+    console.log(filtredtitle)
   }, [targets, title]);
   return (
     <div className="grid lg:grid-cols-4 cursor-pointer gap-3 pt-5 md:grid-cols-2">
@@ -39,6 +38,9 @@ function Card() {
             <p>{item.title}</p>
           </div>
           <div className="flex justify-center">
+              edittags
+              {item.tags?.map(data => (
+                <span  key={data} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
               {item.tags?.map((data, index) => (
                 <span  key={index} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{(data)}</span> 
               ))}

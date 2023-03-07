@@ -29,7 +29,7 @@ function Create() {
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: string[],
+    tags?: {label: string} [],
     id: React.Key | number[],
   }
   const handleData = () => {
@@ -56,6 +56,7 @@ function Create() {
   
   // ...
   const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
+  
     const tags: string[] = newValue.map(value => value.label);
     setSelectedTags(tags);
   };
