@@ -25,8 +25,8 @@ function Card() {
                 <p>{item.title}</p>
               </div>
               <div className="flex justify-center">
-                  {item.tags?.map(data => (
-                    <span  key={item.id} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
+                  {item.tags?.map((data, index) => (
+                    <span  key={index} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
                   ))}
               </div>
             </div>
@@ -35,11 +35,11 @@ function Card() {
       filtredtitle.map((item) => (
         <div key={item.id} className="rounded-lg min-h-[10rem] bg-base-100 shadow-xl border-2" onClick={() => navigate(`${item.title}`)}>
           <div className="card-body text-xl pl-4 pb-4 relative bottom-3">
-            <p>{item.title}</p>
+            {item.title.length < 24 ? <p className="text-center">{item.title}</p> : <p>{item.title}</p>}
           </div>
           <div className="flex justify-center">
-              {item.tags?.map(data => (
-                <span  key={data} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
+              {item.tags?.map((data) => (
+                <span  key={item.id} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{(data)}</span> 
               ))}
           </div>
         </div>

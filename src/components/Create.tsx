@@ -24,11 +24,12 @@ function Create() {
   const [error, setError] = useState(false);
   const { title } = useParams<{ title: string }>();
   const item = store.getState().data.find((item) => item.title === title);
-  const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: {label: string} [],
+    tags?: string[],
     id: React.Key | number[],
   }
   const handleData = () => {
@@ -54,11 +55,10 @@ function Create() {
   };
   
   // ...
-  const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
-    const tags = newValue.map(value => ({ value: value.label, label: value.label }));
+  const handleTagsChange = (newValue: MultiValue<string>) => {
+    const tags = newValue.map(value => value.label)
     setSelectedTags(tags);
   };
-  
   
   
 
@@ -95,7 +95,6 @@ function Create() {
           className="textarea textarea-bordered textarea-lg w-full"
         ></textarea>
       </form>
-
       <div className="buttons float-right pt-4">
         <button
           className="btn btn-sm btn-primary h-10 mr-2"

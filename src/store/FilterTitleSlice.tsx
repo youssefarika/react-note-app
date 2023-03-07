@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+type TestState = string[]
+
+const initialState: TestState = [];
 
 
 const filterSlice = createSlice({
   name: "title",
-  initialState: [],
+  initialState,
   reducers: {
     addTitle: (state, action) => {
         if(state.length !== 0) {

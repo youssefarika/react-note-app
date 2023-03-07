@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { store } from "./store";
 
 
 export type DataState = {
@@ -33,11 +34,22 @@ const dataSlice = createSlice({
       state = state.filter((item) => item.id !== action.payload.id);
       localStorage.setItem("note", JSON.stringify(state)) 
       return state;
+    },
+    DeleteTags: (state, action) => {
+      const updatedState = state.map((item) => {
+        const tags = item.tags?.filter((tag) => tag !== action.payload.join(" "));
+        return { ...item, tags };
+      });
+      localStorage.setItem("note", JSON.stringify(updatedState));
+      return updatedState;
+    },
+    ChangeTags: (state, action) => {
+      console.log(action.payload, initialState)
     }
   }
 });
 
-export const { addData, modifyData, DeleteData } = dataSlice.actions;
+export const { addData, modifyData, DeleteData, DeleteTags, ChangeTags } = dataSlice.actions;
 export default dataSlice.reducer;
 
 
