@@ -28,7 +28,6 @@ function EditTags() {
                 newTags[idx] = {tag: e.target.value, id: allids[idx]};
                 setTags(newTags);
                 dispatch(modifyTags(newTags))
-                console.log(newTags, 'newTags')
             })
         }
         newTags[index] = {tag: e.target.value, id: allids[index]};
