@@ -37,8 +37,11 @@ function Card() {
             {item.title.length < 24 ? <p className="text-center">{item.title}</p> : <p>{item.title}</p>}
           </div>
           <div className="flex justify-center">
-              {item.tags?.map((data) => (
-                <span  key={item.id} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{(data)}</span> 
+              edittags
+              {item.tags?.map(data => (
+                <span  key={data} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{data}</span> 
+              {item.tags?.map((data, index) => (
+                <span  key={index} className="btn-xsm mx-1 px-2 mb-3 font-semibold rounded btn-primary">{(data)}</span> 
               ))}
           </div>
         </div>

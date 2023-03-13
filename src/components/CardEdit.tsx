@@ -37,7 +37,7 @@ const handleData = () => {
         title: TitleText.current.value,
         Desc: DescText.current?.value,
         tags: selectedTags.length > 0 ? selectedTags : item?.tags || [],
-        id: item && item.id || uuid.v4()
+        id: item && item.id
       }
       dispatch(modifyData(data));
       setError(false);

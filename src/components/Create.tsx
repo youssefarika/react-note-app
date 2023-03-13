@@ -60,8 +60,13 @@ function Create() {
     setSelectedTags(tags);
   };
   
-  
 
+  const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
+  
+    const tags = newValue.map(value => value.label);
+    setSelectedTags(tags);
+  };
+  
   return (
     <div className="container">
       <Nav title="New Notes" />
