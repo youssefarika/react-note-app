@@ -29,7 +29,7 @@ function Create() {
   type CreatedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: {label: string} [],
+    tags?: string[],
     id: React.Key | number[],
   }
   const handleData = () => {
@@ -55,6 +55,12 @@ function Create() {
   };
   
   // ...
+  const handleTagsChange = (newValue: MultiValue<string>) => {
+    const tags = newValue.map(value => value.label)
+    setSelectedTags(tags);
+  };
+  
+
   const handleTagsChange = (newValue: MultiValue<{ value: string, label: string }>) => {
   
     const tags = newValue.map(value => value.label);
@@ -94,7 +100,6 @@ function Create() {
           className="textarea textarea-bordered textarea-lg w-full"
         ></textarea>
       </form>
-
       <div className="buttons float-right pt-4">
         <button
           className="btn btn-sm btn-primary h-10 mr-2"

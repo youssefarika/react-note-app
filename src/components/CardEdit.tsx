@@ -22,9 +22,8 @@ function CardEdit() {
   type ModifiedaData = {
     title: string,
     Desc: string | undefined,
-    tags?: { label: string }[]
     id: React.Key | number[],
-
+    tags?: { label: string }[],
   }
 const handleData = () => {
   if (TitleText.current) {

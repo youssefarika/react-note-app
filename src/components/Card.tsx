@@ -14,7 +14,6 @@ function Card() {
   const filtredtags = Datainfo.filter(data => data.tags?.join(" ") === currentTarget)
   const filtredtitle = Datainfo.filter(data => data?.title.slice(0, title.join(" ").length) === title.join(" "))
   useEffect(() => {
-    console.log(filtredtitle)
   }, [targets, title]);
   return (
     <div className="grid lg:grid-cols-4 cursor-pointer gap-3 pt-5 md:grid-cols-2">
@@ -35,7 +34,7 @@ function Card() {
       filtredtitle.map((item) => (
         <div key={item.id} className="rounded-lg min-h-[10rem] bg-base-100 shadow-xl border-2" onClick={() => navigate(`${item.title}`)}>
           <div className="card-body text-xl pl-4 pb-4 relative bottom-3">
-            <p>{item.title}</p>
+            {item.title.length < 24 ? <p className="text-center">{item.title}</p> : <p>{item.title}</p>}
           </div>
           <div className="flex justify-center">
               edittags

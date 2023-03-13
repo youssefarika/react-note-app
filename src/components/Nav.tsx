@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom"
-import EditTags from "./EditTags"
+import EditTags from "./EditTags";
 
 type Titling = {
-    title: string,
-    variant?: string
-}
+    title: string;
+    variant?: string;
+};
 
 function Nav({ title, variant }: Titling) {
     return (
         <>
             <div className="flex pt-4 items-center justify-between">
-                <Link to= "/" className='text-[2.5rem] font-semibold text-gray-800'>{title}</Link>
+                <Link to="/" className="text-[2.5rem] font-semibold text-gray-800">
+                    {title}
+                </Link>
                 <div className="buttons">
                     {variant ? (
                             <>
@@ -23,7 +25,7 @@ function Nav({ title, variant }: Titling) {
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default Nav
+export default Nav;

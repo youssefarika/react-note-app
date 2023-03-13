@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 export type DataState = {
   title: string,
   Desc?: string,
@@ -42,12 +41,25 @@ const dataSlice = createSlice({
       });
       localStorage.setItem("note", JSON.stringify(updatedState));
       return updatedState;
+    },
+    modifyTags: (state, action) => {
+      const ids = action.payload.map((item: { id: string }) => item && item.id);
+      const tags = action.payload.map((item: { tag: string }) => item && item.tag);
+      const newState = state.map((item, index) => {
+        const anid = ids[index]
+        if (anid === item.id) {
+          return { ...item, tags: [tags[index]] };
+        }
+        return item;
+      });
+      localStorage.setItem('note', JSON.stringify(newState));
+      return newState;
     }
     
-  }
-});
+}
+})
 
-export const { addData, modifyData, DeleteData, DeleteTags } = dataSlice.actions;
+export const { addData, modifyData, DeleteData, DeleteTags, modifyTags } = dataSlice.actions;
 export default dataSlice.reducer;
 
 
