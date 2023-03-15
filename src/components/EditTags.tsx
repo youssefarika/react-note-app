@@ -10,7 +10,6 @@ function EditTags() {
     const allids = data?.map((items) => (items.id));
     // Remove all nested array
     const flattenedTags = alltags?.flat(alltags.length);
-    const definedIndices = alltags.map((item, index) => item ? index : undefined).filter((item) => item !== undefined);
     // Remove All duplicated values from the array
     const unusedTags = Array.from(new Set(flattenedTags)).map((item) => item);
     const dispatch = useDispatch()
@@ -20,8 +19,11 @@ function EditTags() {
     const indicesWithValue: number[] = alltags.map((tag, index) => {
         return tag && tag.length > 0 ? index : -1;
     }).filter(index => index !== -1)
-    useEffect(() => {
-      }, [unusedTags, tags, definedIndices]);
+    const indices = unusedTags.map((searchElem) => {
+        return alltags.findIndex((arr) => arr && arr.includes(searchElem));
+      });
+      useEffect(() => {
+      }, [unusedTags, tags, indices]);
       const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
             e.preventDefault();
             const newTags = [...tags];
@@ -33,6 +35,7 @@ function EditTags() {
                     newTags[idx] = {tag: e.target.value, id: allids[idx]};
                     setTags(newTags);
                     dispatch(modifyTags(newTags))
+                    console.log(duplicates, 'duplicates')
                 })
             }
             newTags[index] = {tag: e.target.value, id: allids[index]};
