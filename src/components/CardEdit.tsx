@@ -18,7 +18,6 @@ function CardEdit() {
   const item = store.getState().data.find((item) => item.title === title);
   const [error, setError] = useState(false);
   const [selectedTags, setSelectedTags] = useState<{label: string}[]>([]);
-  type MyOption = {label: string, value: string}
   type ModifiedaData = {
     title: string,
     Desc: string | undefined,
