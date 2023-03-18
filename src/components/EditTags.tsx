@@ -19,12 +19,7 @@ function EditTags() {
     const indicesWithValue: number[] = alltags.map((tag, index) => {
         return tag && tag.length > 0 ? index : -1;
     }).filter(index => index !== -1)
-    const indices = unusedTags.map((searchElem) => {
-        return alltags.findIndex((arr) => arr && arr.includes(searchElem));
-      });
-      useEffect(() => {
-      }, [unusedTags, tags, indices]);
-      const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+        const handleTagsChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
             e.preventDefault();
             const newTags = [...tags];
             // get indexes of duplicated tags
@@ -35,13 +30,13 @@ function EditTags() {
                     newTags[idx] = {tag: e.target.value, id: allids[idx]};
                     setTags(newTags);
                     dispatch(modifyTags(newTags))
-                    console.log(duplicates, 'duplicates')
                 })
             }
             newTags[index] = {tag: e.target.value, id: allids[index]};
             setTags(newTags);
             dispatch(modifyTags(newTags))
-            };
+            const indi = indicesWithValue[index]
+        };
         return (
             // here i iterate the indicesWithValue to edit them 
             <>
